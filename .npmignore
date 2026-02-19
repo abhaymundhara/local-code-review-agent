@@ -1,0 +1,7 @@
+src/
+.github/
+*.test.ts
+tsconfig.json
+.codereview.yaml
+*.md
+!README.md
