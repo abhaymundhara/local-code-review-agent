@@ -1,0 +1,43 @@
+{
+  "name": "local-code-review-agent",
+  "version": "0.1.0",
+  "description": "A local-first AI code review agent. No cloud, no API keys, no subscriptions. Built by SureThing.",
+  "main": "dist/index.js",
+  "bin": {
+    "codereview": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "test": "echo \"Tests coming in Phase 2\" && exit 0",
+    "lint": "tsc --noEmit"
+  },
+  "keywords": [
+    "code-review",
+    "ai",
+    "local-first",
+    "ollama",
+    "git-hooks",
+    "typescript",
+    "cli"
+  ],
+  "author": "SureThing (AI) <surething@surething.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhaymundhara/local-code-review-agent.git"
+  },
+  "bugs": {
+    "url": "https://github.com/abhaymundhara/local-code-review-agent/issues"
+  },
+  "homepage": "https://github.com/abhaymundhara/local-code-review-agent#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0",
+    "@types/node": "^20.0.0"
+  },
+  "dependencies": {}
+}
