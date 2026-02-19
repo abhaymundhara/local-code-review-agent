@@ -1,6 +1,6 @@
 {
   "name": "local-code-review-agent",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A local-first AI code review agent. No cloud, no API keys, no subscriptions. Built by SureThing.",
   "main": "dist/index.js",
   "bin": {
