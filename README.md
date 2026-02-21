@@ -55,6 +55,16 @@ codereview review --staged
 
 # Use a specific model
 codereview review --model codellama
+
+# Show what changed since your last review
+codereview review --since-last
+
+# Export results as GitHub inline comments
+codereview review --export github --export-output review-comments.json
+
+# Export as Markdown or SARIF
+codereview review --export markdown --export-output review.md
+codereview review --export sarif --export-output results.sarif.json
 ```
 
 ### Install git hook (auto-reviews on push)
@@ -70,21 +80,31 @@ codereview install-hook --advisory
 codereview install-hook --pre-commit
 ```
 
+### Review history
+
+```bash
+# Show last 10 reviews
+codereview history
+
+# Show most recent review details
+codereview history --latest
+```
+
 ---
 
 ## Example Output
 
 ```
-🔍 local-code-review-agent
+📍 local-code-review-agent
    Model  : deepseek-coder
    Mode   : diff against main
    Built by SureThing
 
 📂 3 file(s) changed — +87 -12
-🤖 Asking deepseek-coder to review your code...
+🧠 Asking deepseek-coder to review your code...
 
-🔍 Code Review Results
-──────────────────────────────────────────────────
+📍 Code Review Results
+══════════════════════════════════════════════════
 
 🟠 HIGH (1)
   ▸ src/auth.ts:42 Missing input validation on user-supplied token before passing to DB query
@@ -97,8 +117,8 @@ codereview install-hook --pre-commit
   ▸ Clean separation of concerns in the new module structure
   ▸ TypeScript types are well-defined
 
-──────────────────────────────────────────────────
-⚠️  3 issue(s) found — consider addressing
+══════════════════════════════════════════════════
+⚠️   3 issue(s) found — consider addressing
 Powered by Ollama · Built by SureThing
 ```
 
@@ -118,6 +138,7 @@ review:
   check_security: true      # Check for security vulnerabilities
   check_performance: true   # Check for performance issues
   check_style: true         # Check code style
+
   max_file_size_kb: 500     # Skip files larger than this
 
 ignore:
@@ -136,12 +157,32 @@ ignore:
 | `codereview review` | Review current changes vs base branch |
 | `codereview review --staged` | Review only staged changes |
 | `codereview review --model <model>` | Use a specific Ollama model |
+| `codereview review --since-last` | Show diff vs previous review run |
+| `codereview review --export github` | Export inline comments (GitHub JSON) |
+| `codereview review --export markdown` | Export as Markdown report |
+| `codereview review --export sarif` | Export as SARIF (for CI tools) |
+| `codereview history` | List past review runs |
+| `codereview history --latest` | Show most recent review details |
 | `codereview init` | Set up config in current repo |
 | `codereview install-hook` | Install pre-push git hook |
 | `codereview install-hook --pre-commit` | Install pre-commit hook |
 | `codereview install-hook --advisory` | Install in advisory (non-blocking) mode |
 | `codereview uninstall-hook` | Remove installed hook |
 | `codereview config --show` | Show current configuration |
+
+---
+
+## Language Support
+
+The prompt engine automatically detects the primary language in your diff and adds language-specific review hints:
+
+| Language | Extra checks |
+|----------|-------------|
+| **TypeScript** | `any` usage, non-null assertions, type-unsafe casts, missing return types |
+| **JavaScript** | `==` coercions, unhandled promises, `var` usage |
+| **Rust** | Ownership violations, `.unwrap()` abuse, unsafe blocks, panic-prone patterns |
+| **Go** | Goroutine leaks, ignored errors, race conditions, defer-in-loops |
+| **Python** | Mutable defaults, bare excepts, missing type hints, N+1 patterns |
 
 ---
 
@@ -154,12 +195,12 @@ ignore:
 | 3 | Ollama integration & prompt engine | ✅ Done |
 | 4 | Git hook integration | ✅ Done |
 | 5 | Polish & ship v1.0 | ✅ Done |
+| 6 | Multi-file inline comment export | ✅ Done |
+| 7 | Language-aware prompts (Rust, Go, Python) | ✅ Done |
+| 8 | Review history & diff from last review | ✅ Done |
 
-**v1.0.0 is live.** Future work:
-- [ ] Multi-file inline comment export
+**v1.1.0 is live.** Future work:
 - [ ] VS Code extension
-- [ ] Support for more languages (Rust, Go, Python fine-tuned prompts)
-- [ ] Review history / diff from last review
 
 ---
 
